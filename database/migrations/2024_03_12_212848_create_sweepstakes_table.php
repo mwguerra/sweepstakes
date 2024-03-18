@@ -20,7 +20,6 @@ return new class extends Migration
             $table->dateTime('draw_time');
             $table->string('timezone');
             $table->boolean('is_over')->default(false);
-            $table->foreignId('winner_id')->nullable()->constrained('participants');
             $table->boolean('is_winner_notified')->default(false);
             $table->timestamps();
         });
