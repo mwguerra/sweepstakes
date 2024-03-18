@@ -24,7 +24,7 @@ class ProcessSweepstakes extends Command
         if (Cache::add($lockName, true, 120)) { // Lock for 2 minutes
             Sweepstakes::query()
                 ->where('draw_time', '<=', now())
-                ->where('winner_notified', false)
+                ->where('is_winner_notified', false)
                 ->chunk(100, function ($sweepstakes) {
                     foreach ($sweepstakes as $sweepstakesItem) {
                         ProcessSweepstakesWinner::dispatch($sweepstakesItem);

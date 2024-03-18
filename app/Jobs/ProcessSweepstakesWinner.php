@@ -32,7 +32,7 @@ class ProcessSweepstakesWinner implements ShouldQueue
 
         Mail::to($winner->email)->send(new WinnerNotificationMail($this->sweepstakes));
 
-        $this->sweepstakes->winner_notified = true;
+        $this->sweepstakes->is_winner_notified = true;
         $this->sweepstakes->save();
     }
 }
