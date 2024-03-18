@@ -40,7 +40,7 @@ class SweepstakesUpdateRequest extends FormRequest
             'description' => 'string',
             'draw_time' => 'date|after:now',
             'timezone' => 'string|timezone',
-            'prize' => 'string',
+            'winner_email_message' => 'string',
             'keptFiles' => 'array',
             'keptFiles.*' => 'integer',
             'removedFiles' => 'array',

@@ -40,7 +40,7 @@ class SweepstakesStoreRequest extends FormRequest
             'description' => 'required|string',
             'draw_time' => 'required|date|after:now',
             'timezone' => 'required|string|timezone',
-            'prize' => 'required|string',
+            'winner_email_message' => 'required|string',
             'files.*' => 'file|mimes:jpg,jpeg,png,pdf|max:2048',
         ];
     }
