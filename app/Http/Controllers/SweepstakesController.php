@@ -91,21 +91,4 @@ class SweepstakesController extends Controller
 
         return redirect()->route('sweepstakes.index');
     }
-
-    // This method might be triggered by a command or scheduled job
-    public function drawWinner(Sweepstakes $sweepstakes)
-    {
-        if (!$sweepstakes || $sweepstakes->is_over || $sweepstakes->draw_time->isFuture()) {
-            return;
-        }
-
-        $winner = $sweepstakes->participants->random();
-        $sweepstakes->is_over = true;
-        $sweepstakes->save();
-
-        Mail::to($winner->email)->send(new WinnerNotificationMail($sweepstakes));
-
-        // Output for CLI or log
-        echo "Winner drawn and notified for: " . $sweepstakes->title . "\n";
-    }
 }
