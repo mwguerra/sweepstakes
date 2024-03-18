@@ -71,16 +71,14 @@ onBeforeUnmount(() => {
                         <p>Total Participants: {{ props.totalParticipants }}</p>
                         <p v-if="props.sweepstakes.winner">Winner: {{ props.sweepstakes.winner.email }}</p>
                     </div>
-                    <div class="flex gap-x-4 flex-wrap">
+                    <div v-if="!message" class="flex gap-x-4 flex-wrap">
                         <label class="sr-only">Email address</label>
                         <input name="email" type="email" required class="min-w-0 flex-auto rounded-md border-0 bg-white/5 px-3.5 py-2 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-white sm:text-sm sm:leading-6" placeholder="Enter your email" v-model="form.email" />
                         <button type="submit" class="flex-none rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Participate</button>
                     </div>
                     <div class="flex flex-col">
                         <p v-if="form.errors.email" class="mt-2 text-sm text-red-500">{{ form.errors.email }}</p>
-                        <p v-if="form.error" class="mt-2 text-sm text-red-500">{{ form.error }}</p>
-                        <p v-if="form.success" class="mt-2 text-sm text-green-400">{{ form.success }}</p>
-                        <p v-if="message" class="mt-2 text-sm text-gray-500">{{ message }}</p>
+                        <p v-if="message" class="mt-2 text-md text-green-500">{{ message }}</p>
                     </div>
                 </form>
 
