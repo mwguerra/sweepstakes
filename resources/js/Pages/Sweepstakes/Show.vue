@@ -11,13 +11,6 @@ const form = useForm({
     email: ''
 })
 
-const participate = async () => {
-    await form.post(route('sweepstakes.participate', { slug: props.sweepstakes.slug }), {
-        preserveScroll: true,
-        onSuccess: () => form.reset('email'),
-    })
-}
-
 const timeLeft = ref('');
 const targetDate = new Date(props.sweepstakes.draw_time_raw).getTime();
 let interval;
@@ -43,6 +36,13 @@ const handleEdit = () => {
     router.visit(route('sweepstakes.edit', { slug: props.sweepstakes.slug }))
 }
 
+const handleSubmit = async () => {
+    await form.post(route('sweepstakes.participate', { slug: props.sweepstakes.slug }), {
+        preserveScroll: true,
+        onSuccess: () => form.reset('email'),
+    })
+}
+
 onMounted(() => {
     updateCountdown();
     interval = setInterval(updateCountdown, 1000);
@@ -63,14 +63,13 @@ onBeforeUnmount(() => {
         <div class="relative isolate overflow-hidden bg-gray-900 px-6 py-24 shadow-2xl sm:px-24 xl:py-32 min-h-screen flex flex-col justify-center items-center">
             <div class="min-w-full">
                 <h2 class="mx-auto max-w-2xl text-center text-3xl font-bold tracking-tight text-white sm:text-4xl">{{ props.sweepstakes.title }}</h2>
-                <p class="mx-auto mt-2 max-w-3xl text-center text-lg leading-8 text-gray-300">{{ props.sweepstakes.description }}</p>
-                <form class="mx-auto mt-10 max-w-md flex flex-col gap-4">
+                <p class="mx-auto mt-6 max-w-3xl text-center text-lg leading-7 text-gray-300">{{ props.sweepstakes.description }}</p>
+                <form class="mx-auto mt-10 max-w-md flex flex-col gap-4" @submit.prevent="handleSubmit">
                     <div class="flex flex-col text-gray-200">
                         <p>Draw Time: {{ new Date(props.sweepstakes.draw_time_raw).toLocaleString() }}</p>
                         <p>Time Left: {{ timeLeft }}</p>
                         <p>Total Participants: {{ props.totalParticipants }}</p>
-                        <p v-if="props.sweepstakes.winner">Winner: {{ props.sweepstakes.winner }}</p>
-                        <p>Is Done: {{ props.sweepstakes.is_over }}</p>
+                        <p v-if="props.sweepstakes.winner">Winner: {{ props.sweepstakes.winner.email }}</p>
                     </div>
                     <div class="flex gap-x-4 flex-wrap">
                         <label for="email-address" class="sr-only">Email address</label>
