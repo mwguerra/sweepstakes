@@ -50,7 +50,7 @@ class SweepstakesController extends Controller
         if ($sweepstakes && $request->hasFile('newFiles')) {
             foreach ($request->file('newFiles') as $file) {
                 $path = $file->store('public/prizes');
-                $sweepstakes->files()->create([
+                $sweepstakes->winnerEmailFiles()->create([
                     'original_name' => $file->getClientOriginalName(),
                     'size' => $file->getSize(),
                     'path' => $path,
