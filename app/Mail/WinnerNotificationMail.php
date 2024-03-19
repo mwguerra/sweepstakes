@@ -46,7 +46,7 @@ class WinnerNotificationMail extends Mailable
         return new Content(
             view: 'emails.winner-notification',
             with: [
-                $this->sweepstakes->winner_email_message
+                'winnerEmailMessage' => $this->sweepstakes->winner_email_message
             ],
         );
     }
@@ -61,7 +61,7 @@ class WinnerNotificationMail extends Mailable
         $attachments = [];
 
         foreach ($this->sweepstakes->winnerEmailFiles as $file) {
-            Attachment::fromStorage('app/'. $file->path)
+            $attachments[] = Attachment::fromStorage('app/'. $file->path)
                 ->as($file->original_name)
                 ->withMime($file->mime_type);
         }
