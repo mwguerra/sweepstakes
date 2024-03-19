@@ -80,7 +80,7 @@ class Sweepstakes extends Model
      *
      * @return Participant|null
      */
-    protected function determineWinner(): ?Participant
+    public function determineWinner(): ?Participant
     {
         if ($this->participants->isEmpty()) {
             return null;
