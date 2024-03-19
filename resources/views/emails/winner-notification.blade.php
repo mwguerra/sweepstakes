@@ -5,6 +5,6 @@
 </head>
 <body>
     <h1>Congratulations!</h1>
-    <p>You have won the following prize: {{ $prize }}</p>
+    <p>You have won the following prize: {{ $winnerEmailMessage }}</p>
 </body>
 </html>

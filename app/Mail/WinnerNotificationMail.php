@@ -15,7 +15,7 @@ class WinnerNotificationMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $sweepstakes;
+    public Sweepstakes $sweepstakes;
 
     /**
      * Create a new message instance.
@@ -45,20 +45,22 @@ class WinnerNotificationMail extends Mailable
     {
         return new Content(
             view: 'emails.winner-notification',
-            with: $this->sweepstakes->prize,
+            with: [
+                $this->sweepstakes->winner_email_message
+            ],
         );
     }
 
     /**
      * Get the attachments for the message.
      *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
+     * @return array<int, Attachment>
      */
     public function attachments(): array
     {
         $attachments = [];
 
-        foreach ($this->sweepstakes->files as $file) {
+        foreach ($this->sweepstakes->winnerEmailFiles as $file) {
             Attachment::fromStorage('app/'. $file->path)
                 ->as($file->original_name)
                 ->withMime($file->mime_type);
