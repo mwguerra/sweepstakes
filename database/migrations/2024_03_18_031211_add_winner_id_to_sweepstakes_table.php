@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('sweepstakes', function (Blueprint $table) {
-            $table->foreignId('winner_id')->nullable()->constrained('participants')->onDelete('set null');
+            $table->foreignId('winner_id')->after('is_winner_notified')->nullable()->constrained('participants')->onDelete('set null');
         });
     }
 

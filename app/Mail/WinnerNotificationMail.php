@@ -15,22 +15,9 @@ class WinnerNotificationMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public Sweepstakes $sweepstakes;
+    public function __construct(protected Sweepstakes $sweepstakes)
+    {}
 
-    /**
-     * Create a new message instance.
-     *
-     * @param Sweepstakes $sweepstakes
-     * @return void
-     */
-    public function __construct(Sweepstakes $sweepstakes)
-    {
-        $this->sweepstakes = $sweepstakes;
-    }
-
-    /**
-     * Get the message envelope.
-     */
     public function envelope(): Envelope
     {
         return new Envelope(
@@ -38,9 +25,6 @@ class WinnerNotificationMail extends Mailable
         );
     }
 
-    /**
-     * Get the message content definition.
-     */
     public function content(): Content
     {
         return new Content(
@@ -61,7 +45,7 @@ class WinnerNotificationMail extends Mailable
         $attachments = [];
 
         foreach ($this->sweepstakes->winnerEmailFiles as $file) {
-            $attachments[] = Attachment::fromStorage('app/'. $file->path)
+            $attachments[] = Attachment::fromStorage($file->path)
                 ->as($file->original_name)
                 ->withMime($file->mime_type);
         }
