@@ -23,14 +23,17 @@ class ProcessSweepstakes extends Command
 
         if (Cache::add($lockName, true, 120)) { // Lock for 2 minutes
             Sweepstakes::query()
-                ->where('draw_time', '<=', now())
                 ->where('is_winner_notified', false)
                 ->chunk(100, function ($sweepstakes) {
                     foreach ($sweepstakes as $sweepstakesItem) {
-                        ProcessSweepstakesWinner::dispatch($sweepstakesItem);
+                        $nowInDrawTimeTimezone = now(config('app.timezone'));;
 
-                        $sweepstakesItem->is_over = true;
-                        $sweepstakesItem->save();
+                        if ($sweepstakesItem->draw_time <= $nowInDrawTimeTimezone) {
+                            ProcessSweepstakesWinner::dispatch($sweepstakesItem);
+
+                            $sweepstakesItem->is_over = true;
+                            $sweepstakesItem->save();
+                        }
                     }
                 });
 

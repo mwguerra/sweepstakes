@@ -26,7 +26,7 @@ class Sweepstakes extends Model
         'is_winner_notified',
     ];
 
-    protected $appends = ['draw_time_raw', 'draw_time_utc'];
+    protected $appends = ['draw_time_raw', 'draw_time_in_timezone'];
 
     /**
      * Get the attributes that should be cast.
@@ -38,6 +38,7 @@ class Sweepstakes extends Model
         return [
             'draw_time' => 'datetime',
             'is_over' => 'boolean',
+            'is_winner_notified' => 'boolean',
         ];
     }
 
@@ -68,7 +69,7 @@ class Sweepstakes extends Model
         );
     }
 
-    protected function drawTimeUtc(): Attribute
+    protected function drawTimeInTimezone(): Attribute
     {
         return Attribute::make(
             get: fn (mixed $value, array $attributes) => Carbon::createFromFormat('Y-m-d H:i:s', $attributes['draw_time'], $attributes['timezone']),
