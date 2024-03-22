@@ -5,6 +5,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SweepstakesController;
 use App\Http\Controllers\SweepstakesParticipationController;
 use App\Mail\TestEmail;
+use App\Mail\WinnerNotificationMail;
+use App\Models\Sweepstakes;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
@@ -41,7 +43,7 @@ Route::middleware('auth')->group(function () {
         ];
 
         foreach ($testEmails as $email) {
-            Mail::to($email)->send(new TestEmail());
+            Mail::to($email)->send(new WinnerNotificationMail(Sweepstakes::first()));
         }
 
         return 'Test emails sent!';
