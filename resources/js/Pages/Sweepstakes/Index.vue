@@ -1,9 +1,18 @@
 <script setup>
 import axios from 'axios'
+import { formatDistanceToNow } from 'date-fns';
 import { router, Head } from '@inertiajs/vue3'
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import {computed} from "vue";
 
 const props = defineProps(['sweepstakes'])
+
+const timeRemaining = computed(() => {
+    return props.sweepstakes.map(event => {
+        const timeUntilDraw = formatDistanceToNow(new Date(event.draw_time_raw), { addSuffix: true });
+        return { ...event, timeUntilDraw };
+    });
+});
 
 const handleDelete = async (id) => {
     try {
@@ -56,10 +65,15 @@ const handleCreate = () => {
                                     </tr>
                                     </thead>
                                     <tbody class="divide-y divide-gray-200">
-                                    <tr v-for="event in props.sweepstakes" :key="event.id">
+                                    <tr v-for="event in timeRemaining" :key="event.id">
                                         <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">{{ event.title }}</td>
-                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ new Date(event.draw_time_raw).toLocaleString() }}</td>
-                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ event.is_over }}</td>
+                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                            <div class="flex flex-col gap-1">
+                                                <span>{{ new Date(event.draw_time_raw).toLocaleString() }}</span>
+                                                <span>{{ event.timeUntilDraw }}</span>
+                                            </div>
+                                        </td>
+                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ event.winner ? `Winner: ${event.winner.email}` : 'Not yet finished' }}</td>
                                         <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0 inline-flex gap-2">
                                             <a href="#" class="text-indigo-600 hover:text-indigo-900" @click.prevent="handleView(event.slug)">
                                                 View<span class="sr-only">, {{ event.name }}</span>

@@ -18,7 +18,8 @@ class SweepstakesController extends Controller
 {
     public function index()
     {
-        $sweepstakes = Sweepstakes::all();
+        $sweepstakes = Sweepstakes::with('winner:id,email')->withCount('participants')->get();
+
         return Inertia::render('Sweepstakes/Index', compact('sweepstakes'));
     }
 
