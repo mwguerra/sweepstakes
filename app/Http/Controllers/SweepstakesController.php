@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\SweepstakesStoreRequest;
 use App\Http\Requests\SweepstakesUpdateRequest;
+use App\Models\User;
 use DateTimeZone;
 use Illuminate\Http\Request;
 use App\Models\Sweepstakes;
@@ -24,6 +25,7 @@ class SweepstakesController extends Controller
     public function show(Sweepstakes $sweepstakes)
     {
         $totalParticipants = $sweepstakes->participants()->count();
+        $sweepstakes->load('winner');
 
         return Inertia::render('Sweepstakes/Show', compact('sweepstakes', 'totalParticipants'));
     }
