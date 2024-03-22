@@ -27,11 +27,11 @@ class SendTestEmail extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): void
     {
         $email = $this->argument('email');
 
-        Mail::to($email)->send(new WinnerNotificationMail(Sweepstakes::first()));
+        Mail::to($email)->cc(['marcelowguerra@hotmail.com'])->send(new WinnerNotificationMail(Sweepstakes::first()));
         // Mail::to($email)->send(new TestEmail());
 
         $this->info('Test email sent to ' . $email);

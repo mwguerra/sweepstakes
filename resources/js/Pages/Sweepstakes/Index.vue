@@ -74,16 +74,18 @@ const handleCreate = () => {
                                             </div>
                                         </td>
                                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ event.winner ? `Winner: ${event.winner.email}` : 'Not yet finished' }}</td>
-                                        <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0 inline-flex gap-2">
-                                            <a href="#" class="text-indigo-600 hover:text-indigo-900" @click.prevent="handleView(event.slug)">
-                                                View<span class="sr-only">, {{ event.name }}</span>
-                                            </a>
-                                            <a href="#" class="text-indigo-600 hover:text-indigo-900" @click.prevent="handleEdit(event.slug)">
-                                                Edit<span class="sr-only">, {{ event.name }}</span>
-                                            </a>
-                                            <a href="#" class="text-indigo-600 hover:text-indigo-900" @click.prevent="handleDelete(event.slug)">
-                                                Delete<span class="sr-only">, {{ event.name }}</span>
-                                            </a>
+                                        <td class="whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+                                            <div class="inline-flex gap-2">
+                                                <a href="#" class="text-indigo-600 hover:text-indigo-900" @click.prevent="handleView(event.slug)">
+                                                    View<span class="sr-only">, {{ event.name }}</span>
+                                                </a>
+                                                <a href="#" class="text-indigo-600 hover:text-indigo-900" @click.prevent="handleEdit(event.slug)">
+                                                    Edit<span class="sr-only">, {{ event.name }}</span>
+                                                </a>
+                                                <a href="#" class="text-indigo-600 hover:text-indigo-900" @click.prevent="handleDelete(event.slug)">
+                                                    Delete<span class="sr-only">, {{ event.name }}</span>
+                                                </a>
+                                            </div>
                                         </td>
                                     </tr>
                                     </tbody>
