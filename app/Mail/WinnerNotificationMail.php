@@ -52,4 +52,10 @@ class WinnerNotificationMail extends Mailable
 
         return $attachments;
     }
+
+    // For testing purposes only.
+    public function getSweepstakes(): Sweepstakes
+    {
+        return $this->sweepstakes;
+    }
 }

@@ -35,4 +35,10 @@ class ProcessSweepstakesWinner implements ShouldQueue
         $this->sweepstakes->is_winner_notified = true;
         $this->sweepstakes->save();
     }
+
+    // For testing purposes only.
+    public function getSweepstakes(): Sweepstakes
+    {
+        return $this->sweepstakes;
+    }
 }
